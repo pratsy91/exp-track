@@ -67,7 +67,7 @@ const SignUp = () => {
 
   return (
     <React.Fragment>
-      <Card className="w-25 mx-auto mb-5" style={{ marginTop: "120px" }}>
+      <Card className="w-25 mx-auto mb-5" style={{ marginTop: "60px" }}>
         <Form className="m-5" onSubmit={submitHandler}>
           <FloatingLabel label="Enter email" className="mb-3">
             <Form.Control type="email" ref={emailRef} />
@@ -84,11 +84,17 @@ const SignUp = () => {
               />
             </FloatingLabel>
           )}
-
           <Button type="submit"> {isLogin ? "Login" : "Sign Up"}</Button>
         </Form>
       </Card>
+
       <div className="text-center">
+        <div className="mb-5">
+          <Link to="/forget-password">
+            <Button variant="danger">Forgot Password? </Button>
+          </Link>
+        </div>
+
         <h5 className="bg-success d-inline p-3 rounded text-white">
           {isLogin ? "Don't have an Account?" : " Already have an Account"}
           <Link

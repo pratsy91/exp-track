@@ -8,7 +8,9 @@ const Profile = () => {
   const navigate = useNavigate();
   const nameRef = useRef();
   const urlRef = useRef();
-  const [name, setName] = useState("");
+  const [name, setName] = useState([]);
+  const [time, setTime] = useState([]);
+  const [photo, setPhoto] = useState([]);
 
   const getDetails = async () => {
     const response = await fetch(
@@ -28,8 +30,11 @@ const Profile = () => {
     if (!response.ok) {
       return;
     }
-
+    console.log(data);
+    const date = new Date(data.users[0].passwordUpdatedAt).toLocaleDateString();
+    setTime(date);
     setName(data.users[0].displayName);
+    setPhoto(data.users[0].photoUrl);
   };
 
   useEffect(() => {
@@ -57,9 +62,9 @@ const Profile = () => {
       }
     ).then((res) => {
       if (res.ok) {
+        navigate("/home");
         res.json((data) => {
           authCtx.logIn(data.idToken);
-          navigate("/");
         });
       } else {
         res.json((data) => {
@@ -75,16 +80,29 @@ const Profile = () => {
   return (
     <Container style={{ marginTop: "80px" }}>
       <h1 className="mb-5">Update Your Details</h1>
-      <Card bg="light">
-        <h4 className="mt-3 ms-3">Last updated Name : {name}</h4>
+      <Card bg="light" className="mb-5">
         <Button
-          className="mt-5 ms-auto me-5"
+          className="mt-4 ms-auto me-5"
           variant="danger"
           onClick={cancelHandler}
         >
           Cancel
         </Button>
-        <Form className="mt-5 p-3" onSubmit={submitHandler}>
+
+        <div>
+          <span>
+            <h5 className="mt-1 ms-3">Last updated Name : {name}</h5>
+          </span>
+          <span>
+            <h5 className="mt-1 ms-3">
+              Last updated Photo :
+              <img src={photo} alt="pic" style={{ width: "100px" }} />
+            </h5>
+          </span>
+        </div>
+        <h5 className="ms-auto me-3 mb-5 ">Last updated on : {time}</h5>
+
+        <Form className="mt-2 p-3" onSubmit={submitHandler}>
           <Row>
             <Col lg={6}>
               <Form.Group as={Row}>
