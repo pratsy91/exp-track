@@ -158,7 +158,6 @@ export const getUserDetails = () => {
 };
 
 export const updateUserDetails = (name, url, token) => {
-  console.log("🚀 ~ file: Requests.js:154 ~ sendRequest ~ token:", token);
   return async (dispatch) => {
     const sendRequest = async () => {
       const response = await fetch(
@@ -180,9 +179,9 @@ export const updateUserDetails = (name, url, token) => {
     };
     try {
       const response = await sendRequest();
-      const data = await response.json();
-      console.log("🚀 ~ file: Requests.js:174 ~ return ~ data:", data);
-      dispatch(getUserDetails());
+      if (response.ok) {
+        dispatch(getUserDetails());
+      }
     } catch (error) {}
   };
 };
@@ -208,7 +207,7 @@ export const verificationRequest = (token) => {
     try {
       const response = await sendRequest();
       if (response.ok) {
-        alert("done");
+        dispatch(userActions.emailSent({ flag: true }));
       }
     } catch (error) {}
   };

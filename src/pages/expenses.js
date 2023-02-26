@@ -119,6 +119,7 @@ const Expenses = () => {
                   type="number"
                   placeholder="Add Money"
                   ref={moneyRef}
+                  required
                 />
               </Form.Group>
               <Form.Group as={Col}>
@@ -126,6 +127,7 @@ const Expenses = () => {
                   type="text"
                   placeholder="Description"
                   ref={descRef}
+                  required
                 />
               </Form.Group>
               <Form.Group as={Col}>

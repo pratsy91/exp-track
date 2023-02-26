@@ -42,7 +42,7 @@ const Profile = () => {
           variant="danger"
           onClick={cancelHandler}
         >
-          Cancel
+          Go on Previous Page
         </Button>
 
         <div>
@@ -85,7 +85,7 @@ const Profile = () => {
                   </Form.Label>
                 </Col>
                 <Col lg={7}>
-                  <Form.Control type="text" ref={nameRef} />
+                  <Form.Control type="text" ref={nameRef} required />
                 </Col>
               </Form.Group>
             </Col>
@@ -97,7 +97,7 @@ const Profile = () => {
                   </Form.Label>
                 </Col>
                 <Col lg={7}>
-                  <Form.Control type="url" ref={urlRef} />
+                  <Form.Control type="url" ref={urlRef} required />
                 </Col>
               </Form.Group>
             </Col>

@@ -1,5 +1,5 @@
 import React from "react";
-import { Button, Nav, Navbar } from "react-bootstrap";
+import { Badge, Button, Nav, Navbar } from "react-bootstrap";
 import { useSelector } from "react-redux";
 import { NavLink, useNavigate, useRouteLoaderData } from "react-router-dom";
 
@@ -10,6 +10,10 @@ const Header = () => {
 
   const loginHandler = () => {
     navigate("/auth?mode=login");
+  };
+
+  const brandHandler = () => {
+    navigate("/");
   };
 
   const logoutHandler = () => {
@@ -26,8 +30,12 @@ const Header = () => {
             : { backgroundColor: "#af05d9" }
         }
       >
-        <Navbar.Brand className="ms-5 bg- p-2 rounded text-warning">
-          My Expense Tracker
+        <Navbar.Brand
+          className="ms-5 bg- p-2 rounded text-warning"
+          onClick={brandHandler}
+          style={{ cursor: "pointer" }}
+        >
+          <Badge bg="info"> My Expense Tracker</Badge>
         </Navbar.Brand>
         {token && (
           <Nav>
