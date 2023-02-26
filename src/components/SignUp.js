@@ -1,10 +1,16 @@
 import React, { useContext, useRef } from "react";
 import { Button, Card, FloatingLabel, Form } from "react-bootstrap";
-import { useSearchParams, Link, useNavigate } from "react-router-dom";
-import AuthContext from "../store/auth-context";
+import { useSelector } from "react-redux";
+import {
+  useSearchParams,
+  Link,
+  useNavigate,
+  useRouteLoaderData,
+} from "react-router-dom";
 
 const SignUp = () => {
-  const authCtx = useContext(AuthContext);
+  const token = useRouteLoaderData("token");
+  const theme = useSelector((state) => state.themeReducer.theme);
   const [searchParams] = useSearchParams();
   const isLogin = searchParams.get("mode") === "login";
   let url = "";
@@ -50,9 +56,9 @@ const SignUp = () => {
         if (isLogin) {
           res.json().then((data) => {
             const token = data.idToken;
+            localStorage.setItem("email", emailInput);
             localStorage.setItem("token", token);
-            authCtx.logIn(token);
-            navigate("/home");
+            navigate("/");
           });
         } else {
           alert("Successfully Signed up");
@@ -68,7 +74,11 @@ const SignUp = () => {
 
   return (
     <React.Fragment>
-      <Card className="w-25 mx-auto mb-5" style={{ marginTop: "60px" }}>
+      <Card
+        className="w-25 mx-auto mb-5"
+        style={{ marginTop: "60px" }}
+        bg={theme ? "dark" : "light"}
+      >
         <Form className="m-5" onSubmit={submitHandler}>
           <FloatingLabel label="Enter email" className="mb-3">
             <Form.Control type="email" ref={emailRef} />
@@ -85,7 +95,9 @@ const SignUp = () => {
               />
             </FloatingLabel>
           )}
-          <Button type="submit"> {isLogin ? "Login" : "Sign Up"}</Button>
+          <Button type="submit" variant={theme ? "info" : "dark"}>
+            {isLogin ? "Login" : "Sign Up"}
+          </Button>
         </Form>
       </Card>
 
@@ -96,11 +108,17 @@ const SignUp = () => {
           </Link>
         </div>
 
-        <h5 className="bg-success d-inline p-3 rounded text-white">
-          {isLogin ? "Don't have an Account?" : " Already have an Account"}
+        <h5
+          className={
+            theme
+              ? "bg-info d-inline p-3 rounded text-dark"
+              : "bg-dark d-inline p-3 rounded text-white"
+          }
+        >
+          {isLogin ? "Don't have an Account?" : " Already have an Account?"}
           <Link
             to={`?mode=${isLogin ? "signup" : "login"}`}
-            className="text-decoration-none text-dark ms-2"
+            className="text-decoration-none text-primary ms-2"
           >
             {!isLogin ? "Login" : "Sign Up"}
           </Link>
