@@ -48,19 +48,21 @@ const Profile = () => {
         <div>
           <span>
             <h5 className={theme ? "mt-1 ms-3 text-white" : "mt-1 ms-3"}>
-              Last updated Name : {name}
+              Last updated Name : {name ? name : "update your name"}
             </h5>
           </span>
           <span>
             <h5 className={theme ? "mt-1 ms-3 text-white" : "mt-1 ms-3"}>
               Last updated Photo :
-              {photo && (
+              {photo ? (
                 <img
                   src={photo}
                   alt="pic"
                   style={{ width: "100px" }}
                   className="img-thumbnail"
                 />
+              ) : (
+                "update your display picture"
               )}
             </h5>
           </span>
@@ -70,7 +72,7 @@ const Profile = () => {
             theme ? "ms-auto me-3 mb-5 text-white" : "ms-auto me-3 mb-5 "
           }
         >
-          Last updated on : {time}
+          Last updated on : {time ? time : ""}
         </h5>
 
         <Form className="mt-2 p-3" onSubmit={submitHandler}>

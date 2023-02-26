@@ -89,7 +89,21 @@ const Expenses = () => {
 
   return (
     <React.Fragment>
-      <Container className="mt-5 justify-content-center">
+      <Container className="mt-3 justify-content-center">
+        <Container className="text-center mt-5">
+          <h5
+            className={
+              theme
+                ? "text-center  text-white d-inline"
+                : "text-center  text-dark d-inline"
+            }
+          >
+            User Subscription:
+          </h5>
+          <h5 className={premium ? "text-warning" : "text-info"}>
+            {premium ? "Premium" : "Normal"}
+          </h5>
+        </Container>
         <Card className="w-100" bg={theme ? "dark" : "light"}>
           <h2
             className={
@@ -148,7 +162,7 @@ const Expenses = () => {
       </Container>
 
       <Container>
-        <Card bg={theme ? "secondary" : "light"} className="mt-5 mb-5">
+        <Card bg={theme ? "secondary" : "light"} className="mt-5">
           <Card.Header className={theme ? "text-white" : ""}>
             <h3 className="d-inline">Expenses</h3>
             <h3 className="d-inline offset-2">Description</h3>

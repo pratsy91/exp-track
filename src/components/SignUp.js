@@ -55,8 +55,7 @@ const SignUp = () => {
             navigate("/");
           });
         } else {
-          alert("Successfully Signed up");
-          navigate("/?mode=login");
+          navigate("/auth?mode=login");
         }
       } else {
         res.json().then((data) => {
@@ -68,6 +67,11 @@ const SignUp = () => {
 
   return (
     <React.Fragment>
+      {isLogin ? (
+        <h1 className="text-center  mt-3 text-secondary">Login to Continue</h1>
+      ) : (
+        <h1 className="text-center  mt-3 text-secondary">Signup to Register</h1>
+      )}
       <Card
         className="w-25 mx-auto mb-5"
         style={{ marginTop: "60px" }}
