@@ -50,6 +50,7 @@ const SignUp = () => {
         if (isLogin) {
           res.json().then((data) => {
             const token = data.idToken;
+            localStorage.setItem("token", token);
             authCtx.logIn(token);
             navigate("/home");
           });

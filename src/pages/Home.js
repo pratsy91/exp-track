@@ -1,50 +1,30 @@
-import React, { useContext, useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import React, { useCallback, useContext, useEffect, useState } from "react";
+import { Link, useNavigate, useRouteLoaderData } from "react-router-dom";
 import { Button, Card, Col, Row } from "react-bootstrap";
-import AuthContext from "../store/auth-context";
+import { useDispatch, useSelector } from "react-redux";
+import { getUserDetails, verificationRequest } from "../store/Requests";
 
 const Home = () => {
-  const authCtx = useContext(AuthContext);
-  const [name, setName] = useState([]);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState();
+  const dispatch = useDispatch();
+  const theme = useSelector((state) => state.themeReducer.theme);
+  const token = useRouteLoaderData("token");
+  const user = useSelector((state) => state.userReducer.user);
   const navigate = useNavigate();
-  const [emailVerified, setEmailverified] = useState(false);
+  const emailVerified = user.emailVerified;
+  const name = user.displayName;
 
   const emailHandler = () => {
-    fetch(
-      "https://identitytoolkit.googleapis.com/v1/accounts:sendOobCode?key=AIzaSyDJ9KIngXop8piNyJh98dkNzwLknIZGJ30",
-      {
-        method: "POST",
-        body: JSON.stringify({
-          requestType: "VERIFY_EMAIL",
-          idToken: authCtx.token,
-        }),
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-    )
-      .then((res) => {
-        if (res.ok) {
-          alert("Check your email");
-          authCtx.logOut();
-          navigate("/");
-        }
-      })
-      .catch((err) => {
-        alert("Try again Later");
-      });
+    dispatch(verificationRequest(token));
   };
 
   const getDetails = async () => {
-    setLoading(true);
+    // setLoading(true);
     const response = await fetch(
       "https://identitytoolkit.googleapis.com/v1/accounts:lookup?key=AIzaSyDJ9KIngXop8piNyJh98dkNzwLknIZGJ30",
       {
         method: "POST",
         body: JSON.stringify({
-          idToken: authCtx.token,
+          idToken: token,
         }),
         headers: {
           "Content-Type": "application/json",
@@ -53,27 +33,22 @@ const Home = () => {
     );
 
     const data = await response.json();
-    console.log(data);
-
-    setLoading(false);
-    setError(false);
-    const currName = data.users[0].displayName;
-    setName(currName);
-    setEmailverified(data.users[0].emailVerified);
   };
 
   useEffect(() => {
-    getDetails();
+    dispatch(getUserDetails());
   }, []);
 
   return (
     <React.Fragment>
       <Row style={{ marginTop: "150px" }}>
-        <h1 className="ms-5 mb-3">Welcome to Expense Tracker</h1>
+        <h1 className={theme ? "ms-5 mb-3 text-white" : "ms-5 mb-3 text-dark"}>
+          Welcome to Expense Tracker
+        </h1>
 
         <Col>
-          {!loading && !error && (
-            <h4 className="ms-5">
+          {token && (
+            <h4 className={theme ? "ms-5 text-white" : "ms-5 text-dark"}>
               {name ? "View Profile" : "Your Profile is incomplete."}
               <Link className="text-decoration-none ms-3" to="/profile">
                 {name ? "Click here" : "Complete now"}
@@ -82,16 +57,18 @@ const Home = () => {
           )}
         </Col>
       </Row>
-      <Card className="w-25 offset-7">
-        <Button
-          variant={emailVerified ? "primary" : "danger"}
-          className=" m-5"
-          onClick={emailHandler}
-          disabled={emailVerified}
-        >
-          {emailVerified ? "Your Email is Verified" : "Verify Your Email"}
-        </Button>
-      </Card>
+      {token && (
+        <Card className="w-25 offset-7" bg={theme ? "dark" : "light"}>
+          <Button
+            variant={emailVerified ? "warning" : "danger"}
+            className=" m-5"
+            onClick={emailHandler}
+            disabled={emailVerified}
+          >
+            {emailVerified ? "Your Email is Verified" : "Verify Your Email"}
+          </Button>
+        </Card>
+      )}
     </React.Fragment>
   );
 };
