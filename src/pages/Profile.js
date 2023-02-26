@@ -1,10 +1,4 @@
-import React, {
-  useCallback,
-  useContext,
-  useEffect,
-  useRef,
-  useState,
-} from "react";
+import React, { useEffect, useRef } from "react";
 import { Container, Form, Row, Col, Card, Button } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useRouteLoaderData } from "react-router-dom";
@@ -23,67 +17,15 @@ const Profile = () => {
   const name = user.displayName;
   const photo = user.photoUrl;
 
-  // const getDetails = async () => {
-  //   const response = await fetch(
-  //     "https://identitytoolkit.googleapis.com/v1/accounts:lookup?key=AIzaSyDJ9KIngXop8piNyJh98dkNzwLknIZGJ30",
-  //     {
-  //       method: "POST",
-  //       body: JSON.stringify({
-  //         idToken: token,
-  //       }),
-  //       headers: {
-  //         "Content-Type": "application/json",
-  //       },
-  //     }
-  //   );
-
-  //   const data = await response.json();
-  //   if (!response.ok) {
-  //     return;
-  //   }
-  //   console.log(data);
-
-  //   setTime(date);
-  //   setName();
-  //   setPhoto(data.users[0]);
-  // };
-
   useEffect(() => {
     dispatch(getUserDetails());
-  }, []);
+  }, [dispatch]);
 
   const submitHandler = (event) => {
     event.preventDefault();
     const inputName = nameRef.current.value;
     const inputUrl = urlRef.current.value;
     dispatch(updateUserDetails(inputName, inputUrl, token));
-
-    // fetch(
-    //   "https://identitytoolkit.googleapis.com/v1/accounts:update?key=AIzaSyDJ9KIngXop8piNyJh98dkNzwLknIZGJ30",
-    //   {
-    //     method: "POST",
-    //     body: JSON.stringify({
-    //       idToken: token,
-    //       displayName: inputName,
-    //       photoUrl: inputUrl,
-    //       returnSecureToken: true,
-    //     }),
-    //     headers: {
-    //       "Content-Type": "application/json",
-    //     },
-    //   }
-    // ).then((res) => {
-    //   if (res.ok) {
-    //     navigate("/home");
-    //     res.json((data) => {
-    //       // authCtx.logIn(data.idToken);
-    //     });
-    //   } else {
-    //     res.json((data) => {
-    //       alert(data.error.message);
-    //     });
-    //   }
-    // });
   };
 
   const cancelHandler = () => {

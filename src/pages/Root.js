@@ -1,5 +1,5 @@
 import React from "react";
-import { useState } from "react";
+
 import { Container } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { Outlet, useRouteLoaderData } from "react-router-dom";
@@ -9,7 +9,7 @@ import { themeActions } from "../store/themeSlice";
 
 const Root = () => {
   const theme = useSelector((state) => state.themeReducer.theme);
-  const loadedExpenses = useSelector((state) => state.expenseReducer.expenses);
+
   const premium = useSelector((state) => state.premiumReducer.isPremium);
   const token = useRouteLoaderData("token");
   const dispatch = useDispatch();

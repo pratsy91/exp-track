@@ -1,15 +1,9 @@
-import React, { useContext, useRef } from "react";
+import React, { useRef } from "react";
 import { Button, Card, FloatingLabel, Form } from "react-bootstrap";
 import { useSelector } from "react-redux";
-import {
-  useSearchParams,
-  Link,
-  useNavigate,
-  useRouteLoaderData,
-} from "react-router-dom";
+import { useSearchParams, Link, useNavigate } from "react-router-dom";
 
 const SignUp = () => {
-  const token = useRouteLoaderData("token");
   const theme = useSelector((state) => state.themeReducer.theme);
   const [searchParams] = useSearchParams();
   const isLogin = searchParams.get("mode") === "login";

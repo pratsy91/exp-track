@@ -7,10 +7,8 @@ import {
   Container,
   Button,
   ListGroup,
-  Badge,
 } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
-import { premiumActions } from "../store/premiumslices";
 import {
   deleteExpense,
   getExpense,
@@ -77,7 +75,7 @@ const Expenses = () => {
   useEffect(() => {
     dispatch(getExpense());
     setEntries(loadedExpenses);
-  }, [loadedExpenses]);
+  }, [dispatch, loadedExpenses]);
 
   const submitHandler = (event) => {
     event.preventDefault();

@@ -35,7 +35,9 @@ export const postExpense = (cat, desc, money) => {
     };
     try {
       const response = await sendRequest();
-      dispatch(getExpense());
+      if (response.ok) {
+        dispatch(getExpense());
+      }
     } catch (error) {}
   };
 };
@@ -90,7 +92,9 @@ export const deleteExpense = (id) => {
     };
     try {
       const response = await sendRequest();
-      dispatch(getExpense());
+      if (response.ok) {
+        dispatch(getExpense());
+      }
     } catch (error) {}
   };
 };
@@ -118,8 +122,9 @@ export const updateExpense = (cat, desc, money, id) => {
     };
     try {
       const response = await sendRequest();
-      const data = await response.json();
-      dispatch(getExpense());
+      if (response.ok) {
+        dispatch(getExpense());
+      }
     } catch (error) {}
   };
 };

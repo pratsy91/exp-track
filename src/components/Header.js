@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React from "react";
 import { Button, Nav, Navbar } from "react-bootstrap";
 import { useSelector } from "react-redux";
 import { NavLink, useNavigate, useRouteLoaderData } from "react-router-dom";
@@ -26,13 +26,7 @@ const Header = () => {
             : { backgroundColor: "#af05d9" }
         }
       >
-        <Navbar.Brand
-          className={
-            theme
-              ? "ms-5 bg- p-2 rounded text-white"
-              : "ms-5 bg- p-2 rounded text-white"
-          }
-        >
+        <Navbar.Brand className="ms-5 bg- p-2 rounded text-warning">
           My Expense Tracker
         </Navbar.Brand>
         {token && (
@@ -41,7 +35,7 @@ const Header = () => {
               to="/"
               className={({ isActive }) =>
                 isActive
-                  ? "text-decoration-none text-warning me-3"
+                  ? "text-decoration-none text-info me-3"
                   : "text-decoration-none text-white me-3"
               }
               end
@@ -52,7 +46,7 @@ const Header = () => {
               to="/profile"
               className={({ isActive }) =>
                 isActive
-                  ? "text-decoration-none text-warning me-3"
+                  ? "text-decoration-none text-info me-3"
                   : "text-decoration-none text-white me-3"
               }
             >
@@ -62,7 +56,7 @@ const Header = () => {
               to="/expenses"
               className={({ isActive }) =>
                 isActive
-                  ? "text-decoration-none text-warning"
+                  ? "text-decoration-none text-info"
                   : "text-decoration-none text-white"
               }
             >

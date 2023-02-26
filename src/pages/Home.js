@@ -1,5 +1,5 @@
-import React, { useCallback, useContext, useEffect, useState } from "react";
-import { Link, useNavigate, useRouteLoaderData } from "react-router-dom";
+import React, { useEffect } from "react";
+import { Link, useRouteLoaderData } from "react-router-dom";
 import { Button, Card, Col, Row } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { getUserDetails, verificationRequest } from "../store/Requests";
@@ -9,7 +9,6 @@ const Home = () => {
   const theme = useSelector((state) => state.themeReducer.theme);
   const token = useRouteLoaderData("token");
   const user = useSelector((state) => state.userReducer.user);
-  const navigate = useNavigate();
   const emailVerified = user.emailVerified;
   const name = user.displayName;
 
@@ -17,27 +16,9 @@ const Home = () => {
     dispatch(verificationRequest(token));
   };
 
-  const getDetails = async () => {
-    // setLoading(true);
-    const response = await fetch(
-      "https://identitytoolkit.googleapis.com/v1/accounts:lookup?key=AIzaSyDJ9KIngXop8piNyJh98dkNzwLknIZGJ30",
-      {
-        method: "POST",
-        body: JSON.stringify({
-          idToken: token,
-        }),
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-    );
-
-    const data = await response.json();
-  };
-
   useEffect(() => {
     dispatch(getUserDetails());
-  }, []);
+  }, [dispatch]);
 
   return (
     <React.Fragment>

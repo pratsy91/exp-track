@@ -28,9 +28,10 @@ const router = createBrowserRouter([
 
 function App() {
   const dispatch = useDispatch();
+
   useEffect(() => {
     dispatch(getExpense());
-  }, []);
+  }, [dispatch]);
 
   const theme = useSelector((state) => state.themeReducer.theme);
   return (
